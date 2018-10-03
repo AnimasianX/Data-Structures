@@ -13,12 +13,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+/*
+Basic Stack Data Structure
+*/
+
 //#define SIZE 10
 ///*
 // * 
 // */
 //
 //typedef struct {
+      
 //    int item[SIZE];
 //    int top;
 //    
@@ -34,6 +40,7 @@
 //{
 // sp->top = -1;   
 //}
+
 //void push(Stack *sp, int value)
 //{
 //    if(sp->top == SIZE -1)
@@ -72,7 +79,7 @@
 //    printf("What operation do you want to perform on the stack?\n");
 //    
 //    
-//    
+//    //Loop for user interation and tests
 //    
 //    while(1)
 //    {
@@ -133,6 +140,7 @@
 //void init(Stack *sp,int size)
 //{
 // sp->top = -1;
+   //allocating integer pointer with size of (int* size) dynamically
 // sp->item = (int *)malloc(sizeof(int) * size);
 // if(sp->item == NULL)
 // {
@@ -147,6 +155,7 @@
 //    if(sp->top == sp->size -1)
 //    {
 //        int *temp;
+          //if the size of the array reaches the max, allocate more space to the new array(in this case 2X)
 //        temp = (int *)malloc(sizeof(int) * sp->size *2);
 //        if(temp == NULL)
 //        {
@@ -159,6 +168,7 @@
 //            temp[i] = sp->item[i];
 //            
 //        }
+          //make sure to deallocate
 //        free(sp->item);
 //        sp->item = temp;
 //        sp->size *= 2;
@@ -245,7 +255,7 @@
 
 /*
  Print Binary example
- 
+ This is a program to print the binary configuration of any Integer
  */
 
 //typedef struct {
@@ -277,10 +287,13 @@
 //void printBinary(unsigned int n)
 //{
 //    Stack s;
+      //Placeholder to keep track of the input and print it out later because we are performing the operation on n.
 //    int placeHolder = n;
 //    init(&s, 10);
 //    while(n != 0)
 //    {
+          //we find the remainder which will always be 1 or 0 and push it onto the stack.
+
 //        if(n%2 == 0)
 //        {
 //            push(&s, 0);
@@ -292,6 +305,7 @@
 //        }
 //    }
 //    
+      //now, we pop the stack until it is empty and give us the binary representation of the given number
 //    printf("Binary equivalent of %d is: \n",placeHolder);
 //    while(!isUnderflow(&s))
 //    {
@@ -384,7 +398,7 @@
 
 /*
  Reversing file content using stack
- 
+ In this program, we intake a file and output the results of that file backwards.
  */
 
 
@@ -546,8 +560,9 @@
 
 
 
-//Parenthesis Checking program
-
+/*Parenthesis Checking program
+- An algorithm using Stack data structure to assist in solving a problem on matching brackets
+*/
 
 // implementation of bracket checker program
 
@@ -833,7 +848,9 @@
 
 
 
-//Infix to postfix assignment
+//Infix to postfix notation program
+// basically this program can convert 2 + (5*5) - 1 into (2 5 5 * + 1 -).
+
 typedef struct{
     char opStack[SIZE];
     int top;
@@ -883,8 +900,10 @@ char pop(OperatorStack *sp){
     return sp->opStack[sp->top--];
 }
 
-int prcd (char left, char right)
+int prcd (char left, char right)// precedence checker to determine procedure
 {
+ // we know that if there is another '(' after, it will always return false because the first parenthesis will have lower 
+ // precedence than the new one.
     if(left == '(' || right == '(')
     {
         return 0;
@@ -911,7 +930,7 @@ int prcd (char left, char right)
         else 
             return 0;
     }
-    
+    //$ means to the power of that variable. I did not use the ^ symbol
     if(left == '$')
         return 1;
         
@@ -930,6 +949,10 @@ void printPostfix(char infix[], char postFix[]){
     while(infix[i] != '\0')
     {
         char token = infix[i];
+     //using char array since we are not solving for anything except getting the postfix notation.
+     //to fix the ascii character of an integer number, refer to the ascii table and subtract the 
+     //matching char by the integer char to get the integer number.
+     //example in next set of code when implementing a solver.
         if(token >= '0' || token >='9'){
             postFix[j] = infix[i];
             j++;
@@ -995,7 +1018,7 @@ int main()
 }
 
 
-/*
+/*Pseudocode for algorithm
  WHILE NOT END OF INFIX STRING:
  *  token = GET THE NEXT ELEMENT FROM INFIX STRING
  * IF TOKEN IS AN OPERAND 
