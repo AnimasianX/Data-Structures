@@ -17,7 +17,7 @@
 /*
  * Algorithm for FIFO Queue using 1-D array
  */
-//#define  5
+#define SIZE 5
 
 
 
@@ -26,54 +26,56 @@
 // therefore, once it reaches the max size, it will have overflow and underflow.
 
 
-//typedef struct{
-//    int item[SIZE];
-//    int rear;
-//    int front;
-//}Queue;
+typedef struct{
+   int item[SIZE];
+   int rear;
+   int front;
+}Queue;
+
+//prototypes
+void init(Queue *);
+void enqueue(Queue *, int);
+int dequeue(Queue *);
+
 //
-////prototypes
-//void init(Queue *);
-//void enqueue(Queue *, int);
-//int dequeue(Queue *);
-//
-////
-//void init(Queue *q){
-//   
-//    q->front = 0;
-//    q->rear = 0;
-//    
-//}
-//
-//void enqueue(Queue *q, int value){
-//    if(q->rear == SIZE){
-//        printf("Queue Overflow.");
-//        return;
-//    }
-//    
-//    
-//    q->item[q->rear] = value;
-//    q->rear = (++q->rear);
-//   
-//}
-//int dequeue(Queue *q){
-//    if(q->rear == q->front)
-//    {
-//        printf("Queue Underflow.");
-//        exit(1);
-//        
-//    }
-//    
-//    int v = q->item[q->front];
-//    q->front = (q->front + 1);
-//    
-//    return v;
-//    
-//    
-//}
+void init(Queue *q){
+  
+   q->front = 0;
+   q->rear = 0;
+   
+}
+
+void enqueue(Queue *q, int value){
+   if(q->rear == SIZE){
+       printf("Queue Overflow.");
+       return;
+   }
+   
+   
+   q->item[q->rear] = value;
+   q->rear = (++q->rear);
+  
+}
+int dequeue(Queue *q){
+   if(q->rear == q->front)
+   {
+       printf("Queue Underflow.");
+       exit(1);
+       
+   }
+   
+   int v = q->item[q->front];
+   q->front = (q->front + 1);
+   
+   return v;
+   
+   
+}
 //int main(int argc, char** argv) {
-//    Queue q;
-//    init(&q);
+   Queue q;
+   init(&q);
+
+//This section to test queue working[
 ////    enqueue(&q, 5);
 ////    enqueue(&q, 10);
 ////    enqueue(&q, 15);
@@ -85,151 +87,154 @@
 ////    printf("%d\n", dequeue(&q));
 ////    printf("%d\n", dequeue(&q));
 //    
-//    int quit = 0;
-//    int value;
-//    while(!quit){
-//        int choice;
-//        printf("Input your option:\n1.Enqueue\n2.Dequeue\n3.Quit\n");
-//        scanf("%d", &choice);
-//        
-//        switch(choice){
-//            case 1: 
-//                printf("Input value to enqueue: ");
-//                scanf("%d", &value);
-//                enqueue(&q, value);
-//                break;
-//            case 2:
-//                value = dequeue(&q);
-//                if(value = -9999)
-//                {
-//                    printf("Queue Underflow\n");
-//                }
-//                else
-//                    printf("Dequeued value: %d\n", value);
-//                break;
-//            case 3: 
-//                quit = 1;
-//                break;
-//            default: 
-//                printf("Not a valid choice.\n");
-//                
-//             
-//                
-//        }
-//    }
-//    
-//    
-//    return (EXIT_SUCCESS);
-//}
-
-// circular queue fixes the FIFO problem//
-
+// ]
+   int quit = 0;
+   int value;
+   while(!quit){
+       int choice;
+       printf("Input your option:\n1.Enqueue\n2.Dequeue\n3.Quit\n");
+       scanf("%d", &choice);
+       
+       switch(choice){
+           case 1: 
+               printf("Input value to enqueue: ");
+               scanf("%d", &value);
+               enqueue(&q, value);
+               break;
+           case 2:
+               value = dequeue(&q);
+               if(value = -9999)
+               {
+                   printf("Queue Underflow\n");
+               }
+               else
+                   printf("Dequeued value: %d\n", value);
+               break;
+           case 3: 
+               quit = 1;
+               break;
+           default: 
+               printf("Not a valid choice.\n");
+               
+            
+               
+       }
+   }
+   
+   
+   return (EXIT_SUCCESS);
+}
 
 
-//typedef struct{
-//    int item[SIZE];
-//    int rear;
-//    int front;
-//}Queue;
+
+//*****// circular queue fixes the FIFO problem//*****//
+
+
+
+typedef struct{
+   int item[SIZE];
+   int rear;
+   int front;
+}Queue;
+
+//prototypes
+void init(Queue *);
+void enqueue(Queue *, int);
+int dequeue(Queue *);
+
 //
-////prototypes
-//void init(Queue *);
-//void enqueue(Queue *, int);
-//int dequeue(Queue *);
-//
-////
-//void init(Queue *q){
-//   //test
-//    q->front = SIZE -1;
-//    q->rear = SIZE -1;
+void init(Queue *q){
+  //test
+   q->front = SIZE -1;
+   q->rear = SIZE -1;
+   
+}
+
+void enqueue(Queue *q, int value){
+  //if rear + 1 % SIZE is front, then you cannot add anymore
+   if((q->rear + 1) % SIZE == q->front){
+       printf("Queue Overflow.");
+       return;
+   }
+   
+   //
+  
+   q->rear = (q->rear +1) % SIZE;
+   q->item[q->rear] = value;
+  
+}
+int dequeue(Queue *q){
+   if(q->rear == q->front)
+   {
+       
+       return -9999;
+       
+   }
+   
+   
+   q->front = (q->front + 1) % SIZE;
+   int v = q->item[q->front];
+   return v;
+   
+   
+}
+int main(int argc, char** argv) {
+   Queue q;
+   init(&q);
+//    enqueue(&q, 5);
+//    enqueue(&q, 10);
+//    enqueue(&q, 15);
+//    enqueue(&q, 20);
 //    
-//}
-//
-//void enqueue(Queue *q, int value){
-//   //if rear + 1 % SIZE is front, then you cannot add anymore
-//    if((q->rear + 1) % SIZE == q->front){
-//        printf("Queue Overflow.");
-//        return;
-//    }
-//    
-//    //
-//   
-//    q->rear = (q->rear +1) % SIZE;
-//    q->item[q->rear] = value;
-//   
-//}
-//int dequeue(Queue *q){
-//    if(q->rear == q->front)
-//    {
-//        
-//        return -9999;
-//        
-//    }
-//    
-//    
-//    q->front = (q->front + 1) % SIZE;
-//    int v = q->item[q->front];
-//    return v;
-//    
-//    
-//}
-//int main(int argc, char** argv) {
-//    Queue q;
-//    init(&q);
-////    enqueue(&q, 5);
-////    enqueue(&q, 10);
-////    enqueue(&q, 15);
-////    enqueue(&q, 20);
-////    
-////    printf("%d\n", dequeue(&q));
-////    printf("%d\n", dequeue(&q));
-////    printf("%d\n", dequeue(&q));
-////    printf("%d\n", dequeue(&q));
-////    printf("%d\n", dequeue(&q));
-//    
-//    int quit = 0;
-//    int value;
-//    while(!quit){
-//        int choice;
-//        printf("Input your option:\n1.Enqueue\n2.Dequeue\n3.Quit\n");
-//        scanf("%d", &choice);
-//        
-//        switch(choice){
-//            case 1: 
-//                printf("Input value to enqueue: ");
-//                scanf("%d", &value);
-//                enqueue(&q, value);
-//                break;
-//            case 2:
-//                value = dequeue(&q);
-//                if(value == -9999)
-//                {
-//                    printf("Queue Underflow\n");
-//                }
-//                else
-//                    printf("Dequeued value: %d\n", value);
-//                break;
-//            case 3: 
-//                quit = 1;
-//                break;
-//            default: 
-//                printf("Not a valid choice.\n");
-//                
-//             
-//                
-//        }
-//    }
-//    
-//    
-//    return (EXIT_SUCCESS);
-//}
+//    printf("%d\n", dequeue(&q));
+//    printf("%d\n", dequeue(&q));
+//    printf("%d\n", dequeue(&q));
+//    printf("%d\n", dequeue(&q));
+//    printf("%d\n", dequeue(&q));
+   
+   int quit = 0;
+   int value;
+   while(!quit){
+       int choice;
+       printf("Input your option:\n1.Enqueue\n2.Dequeue\n3.Quit\n");
+       scanf("%d", &choice);
+       
+       switch(choice){
+           case 1: 
+               printf("Input value to enqueue: ");
+               scanf("%d", &value);
+               enqueue(&q, value);
+               break;
+           case 2:
+               value = dequeue(&q);
+               if(value == -9999)
+               {
+                   printf("Queue Underflow\n");
+               }
+               else
+                   printf("Dequeued value: %d\n", value);
+               break;
+           case 3: 
+               quit = 1;
+               break;
+           default: 
+               printf("Not a valid choice.\n");
+               
+            
+               
+       }
+   }
+   
+   
+   return (EXIT_SUCCESS);
+}
 
 
 
 
-/*
+/********************
  * Double ended queue
- */
+ *******************/
 
 #define SIZE 5
 typedef struct{
