@@ -236,6 +236,12 @@ int deleteLast(LinkedList *listptr){
     return data;  
 }
 
+/*
+Customized find function to return the target node
+and keep reference of the previous pointer to pointer so
+i can use it to delete a target and redirect the next node 
+of the target to the previous node
+*/
 Node * find(LinkedList *listptr, int target, Node **prev){
     
     if(listptr->nodeCount == 0){
@@ -293,6 +299,7 @@ void reverse(LinkedList *listptr){
         return;
     }
     
+    
     Node *q, *p, *r;
     q = NULL;
     p = listptr->head;
@@ -349,6 +356,7 @@ int main(int argc, char** argv) {
         scanf("%d", &choice);
         switch(choice){
             case 1: 
+                //input your own file here from function
                 success = loadFromFile(&list, "/Users/animasian/CProjects/Datafile/loadNodeData.txt");
                 if(success == 1)
                 printf("File has been loaded.");
@@ -374,6 +382,7 @@ int main(int argc, char** argv) {
             case 6:
                 printf("Input value to find: ");
                 scanf("%d", &value);
+                
                 current = find(&list, value, &prev);
                 if(current == NULL){
                     printf("Target not found");
