@@ -18,6 +18,7 @@
 /*
  * Binary tree implementation 
  * from **cslibrary.stanford.edu/110/BinaryTrees,html#csoln**
+ * still completing problems from site**
  */
 
 typedef struct Node{
